@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fluxo de Caixa Pessoal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Fluxo de Caixa</h1>
+            <p>Controle financeiro pessoal simplificado</p>
+        </header>
+
+        <section class="dashboard">
+            <div class="card income">
+                <h3>Entradas</h3>
+                <p id="total-income">R$ 0,00</p>
+            </div>
+            <div class="card expense">
+                <h3>Saídas</h3>
+                <p id="total-expense">R$ 0,00</p>
+            </div>
+            <div class="card balance">
+                <h3>Saldo Líquido</h3>
+                <p id="total-balance">R$ 0,00</p>
+            </div>
+        </section>
+
+        <div class="main-content">
+            <section class="transaction-form">
+                <h2>Nova Transação</h2>
+                <form id="form">
+                    <div class="input-group">
+                        <label for="description">Descrição</label>
+                        <input type="text" id="description" placeholder="Ex: Salário, Aluguel..." required>
+                    </div>
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="amount">Valor (R$)</label>
+                            <input type="number" id="amount" step="0.01" min="0.01" placeholder="0.00" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="date">Data</label>
+                            <input type="date" id="date" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Tipo</label>
+                        <div class="radio-group">
+                            <label class="radio-label income-radio">
+                                <input type="radio" name="type" value="income" required>
+                                <span>Receita</span>
+                            </label>
+                            <label class="radio-label expense-radio">
+                                <input type="radio" name="type" value="expense" required>
+                                <span>Despesa</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit">Adicionar Transação</button>
+                </form>
+            </section>
+
+            <section class="transaction-list">
+                <h2>Histórico</h2>
+                <div class="table-container">
+                    <table id="transactions-table" class="hidden">
+                        <thead>
+                            <tr>
+                                <th>Descrição</th>
+                                <th>Valor</th>
+                                <th>Data</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transaction-tbody">
+                            <!-- Transactions will be inserted here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+                <div id="empty-state" class="empty-state">
+                    <p>Nenhuma transação registrada ainda.</p>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
