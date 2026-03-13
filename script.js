@@ -1,7 +1,5 @@
-// State management
 let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
 
-// DOM Elements
 const form = document.getElementById('form');
 const descriptionInput = document.getElementById('description');
 const amountInput = document.getElementById('amount');
@@ -16,17 +14,14 @@ const totalIncomeEl = document.getElementById('total-income');
 const totalExpenseEl = document.getElementById('total-expense');
 const totalBalanceEl = document.getElementById('total-balance');
 
-// Initialize
 function init() {
     setupEventListeners();
     updateUI();
 }
 
-// Event Listeners
 function setupEventListeners() {
     form.addEventListener('submit', handleAddTransaction);
     
-    // Setup custom radio button styling
     radioInputs.forEach(input => {
         input.addEventListener('change', (e) => {
             radioLabels.forEach(label => label.classList.remove('selected'));
@@ -35,7 +30,6 @@ function setupEventListeners() {
     });
 }
 
-// Add Transaction
 function handleAddTransaction(e) {
     e.preventDefault();
 
@@ -60,31 +54,25 @@ function handleAddTransaction(e) {
     transactions.push(transaction);
     saveToLocalStorage();
     
-    // Reset form
     form.reset();
     radioLabels.forEach(label => label.classList.remove('selected'));
     
-    // Default focus back to description
     descriptionInput.focus();
 
     updateUI();
 }
 
-// Delete Transaction
 function deleteTransaction(id) {
     transactions = transactions.filter(t => t.id !== id);
     saveToLocalStorage();
     updateUI();
 }
-// Expose functions globally for inline HTML event handlers (e.g. onclick)
 window.deleteTransaction = deleteTransaction;
 
-// Save to LocalStorage
 function saveToLocalStorage() {
     localStorage.setItem('transactions', JSON.stringify(transactions));
 }
 
-// Format Currency
 function formatCurrency(value) {
     return new Intl.NumberFormat('pt-BR', {
         style: 'currency',
@@ -92,20 +80,16 @@ function formatCurrency(value) {
     }).format(value);
 }
 
-// Format Date
 function formatDate(dateString) {
-    // Handling timezone issues with standard Date parsing
     const [year, month, day] = dateString.split('-');
     return `${day}/${month}/${year}`;
 }
 
-// Update UI
 function updateUI() {
     renderTransactions();
     updateDashboard();
 }
 
-// Render Transactions List
 function renderTransactions() {
     tbody.innerHTML = '';
 
@@ -118,7 +102,6 @@ function renderTransactions() {
     table.classList.remove('hidden');
     emptyState.classList.add('hidden');
 
-    // Sort by date (newest first)
     const sortedTransactions = [...transactions].sort((a, b) => new Date(b.date) - new Date(a.date));
 
     sortedTransactions.forEach(t => {
@@ -142,7 +125,6 @@ function renderTransactions() {
     });
 }
 
-// Update Dashboard Cards
 function updateDashboard() {
     const income = transactions
         .filter(t => t.type === 'income')
@@ -159,5 +141,4 @@ function updateDashboard() {
     totalBalanceEl.innerText = formatCurrency(balance);
 }
 
-// Run app
 init();
